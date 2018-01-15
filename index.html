@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Reset CSS -->
+  <link rel="stylesheet" href="assets/css/reset.css">
+
+  <!-- Bootstrap CDN bootswatch - Lux-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0-beta.2/lux/bootstrap.min.css">
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+
+  <!-- Style Reference -->
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <title>Train Homework</title>
+</head>
+
+<body background="assets/railway.jpg">
+
+
+  <!-- Main Container -->
+  <div class="container">
+
+    <!-- Header -->
+    <div class="row">
+      <div class="col-md-12">
+        <div class="jumbotron">
+          <h1 class="text-info">Anytime is Train Time</h1>
+          <br>
+          <h3 class="text-danger">Choo Choo. Chee Chee.</h3>
+        </div>
+      </div>
+    </div>
+
+    <!-- Train Time Table -->
+    <div class="card border-info">
+      <div class="card-header text-light bg-info">Current Train Schedule</div>
+      <div class="card-body">
+        <table class="table" id="train-data">
+          <thead class="table-active">
+            <tr>
+              <th>Train Name</th>
+              <th>Destination</th>
+              <th>Frequency</th>
+              <th>Next Arrival</th>
+              <th>Minutes Away</th>
+            </tr>
+          </thead>
+          <tbody id="table-body">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- form fields -->
+    <div class="card border-info">
+      <div class="card-header text-light bg-info">Add Train</div>
+      <div class="card-body">
+        <form class="form-horizontal" id="employee-form">
+          <div class="form-group">
+            <label for="name-input">Train Name</label>
+            <input type="text" class="form-control" id="name-input">
+          </div>
+          <div class="form-group">
+            <label for="destination-input">Destination</label>
+            <input type="text" class="form-control" id="destination-input">
+          </div>
+          <div class="form-group">
+            <label for="start-time-input">First Train Time (HH:mm - military time)</label>
+            <input type="time" class="form-control" id="start-time-input">
+          </div>
+          <div class="form-group">
+            <label for="frequency-input">Frequency (min)</label>
+            <input type="number" class="form-control" id="frequency-input">
+          </div>
+          <button type="submit" id="submit" class="btn btn-danger">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Jquery JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+
+  <!-- JS File Reference -->
+  <script src="assets/javascript/script.js" type="text/javascript">
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+  crossorigin="anonymous"></script>
+
+
+</body>
+
+</html>
