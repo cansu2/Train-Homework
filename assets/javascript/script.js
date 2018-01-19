@@ -17,44 +17,27 @@ $(document).ready(function() {
   var destination = "";
   var firstTime = 0;
   var frequency = 0;
-
-
-  // console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
   
 
 $("#submit").on("click", function(event) {
 
   event.preventDefault();
 
-  // console.log(moment(convertedDate).format("MM/DD/YY"));
-
   var newName = $("#name-input").val().trim();
   var newDestination = $("#destination-input").val().trim();
   var newStartTime = $("#start-time-input").val();
   var newFrequency = parseInt($("#frequency-input").val());
 
-  database.ref().push({
-    name: newName,
-    destination: newDestination,
-    startTime: newStartTime,
-    frequency: newFrequency,
-    // arrival: nextArrival,
-    // dateAdded: firebase.database.ServerValue.TIMESTAMP
-  });
-
-  $("#name-input").val("");
-  $("#destination-input").val("");
-  $("#start-time-input").val("");
-  $("#frequency-input").val("");
+  console.log(newStartTime);
 
   var firstTimeConverted = moment(newStartTime, "hh:mm").subtract(1,"years");
   console.log(firstTimeConverted);
 
   var currentTime = moment();
-  console.log("CURRENT TIME" + moment(currentTime).format("hh:mm"));
+  console.log("CURRENT TIME " + moment(currentTime).format("hh:mm"));
 
   var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-  console.log("diff" + diffTime);
+  console.log("diff " + diffTime);
 
   var tRemainder = diffTime % newFrequency;
   console.log(tRemainder);
@@ -62,67 +45,54 @@ $("#submit").on("click", function(event) {
   var minAway = newFrequency - tRemainder;
   console.log("min away" + minAway);
 
-  var nextArrival = moment().add(minAway, "minutes");
-  console.log("arrival time" + moment(nextArrival).format("hh:mm"));
+  var nextArrival = moment(moment().add(minAway, "minutes")).format("H:mm");
+  console.log("arrival time " + nextArrival);
 
+  database.ref().push({
+    name: newName,
+    destination: newDestination,
+    startTime: newStartTime,
+    frequency: newFrequency,
+    arrival: nextArrival,
+    minAway: minAway,
+    
+  });
 
+  $("#name-input").val("");
+  $("#destination-input").val("");
+  $("#start-time-input").val("");
+  $("#frequency-input").val("");
+
+  
 });
 
 database.ref().on("child_added", function(childSnapshot) {
 
   // Log everything that's coming out of snapshot
-  console.log(childSnapshot.val().name);
-  console.log(childSnapshot.val().destination);
-  console.log(childSnapshot.val().startTime);
-  console.log(childSnapshot.val().frequency);
 
+  console.log("\n", childSnapshot.val());
   var newRow = $("<tr>");
   var nameCell = $("<td>").text(childSnapshot.val().name);
   var destinationCell = $("<td>").text(childSnapshot.val().destination);
   var frequencyCell = $("<td>").text(childSnapshot.val().frequency);
-  var nextArrivalCell = $("<td>").text(childSnapshot.val().nextArrival)
-  // var startTimeCell = $("<td>").text(childSnapshot.val().startTime);
+  var nextArrivalCell;
+  if ( childSnapshot.val().arrival < moment()) {
+    nextArrivalCell = $("<td>").text(childSnapshot.val().arrival)
+  } else {
+    nextArrivalCell = $("<td>").text(childSnapshot.val().startTime)
+
+  }
+
+  var minAwayCell = $("<td>").text(childSnapshot.val().minAway);
   
 
-  newRow.append(nameCell, destinationCell , frequencyCell, nextArrivalCell);
+  newRow.append(nameCell, destinationCell , frequencyCell, nextArrivalCell,minAwayCell);
 
   $("#table-body").append(newRow);
 
-// Handle the errors
 }, function(errorObject) {
   console.log("Errors handled: " + errorObject.code);
 });
-
-
-/*database.ref().on("value", function(snapshot) {
-
-  // If Firebase has a highPrice and highBidder stored (first case)
-  if (snapshot.child("highBidder").exists() && snapshot.child("highPrice").exists()) {
-    // Set the variables for highBidder/highPrice equal to the stored values.
-    highBidder = snapshot.val().highBidder;
-    highPrice = parseInt(snapshot.val().highPrice);
-
-    // Change the text inside the HTML element to reflect the initial value
-    $("#highest-bidder").text(snapshot.val().highBidder);
-    $("#highest-price").text("$" + snapshot.val().highPrice);
-
-    // Print the data to the console.
-    console.log(snapshot.val().highBidder);
-    console.log(snapshot.val().highPrice);
-  }
-
-  // Keep the variables for highBidder/highPrice equal to the initial values
-  else {
-
-    // Change the HTML to reflect the initial value
-    $("#highest-bidder").text(highBidder);
-    $("#highest-price").text("$" + highPrice);
-
-    // Print the initial data to the console.
-    console.log("Current High Price");
-    console.log(highBidder);
-    console.log(highPrice);
-  }*/
 
 
 
